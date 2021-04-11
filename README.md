@@ -204,6 +204,13 @@ However, when you are ready to verify the end-to-end system prior to submission,
 4. `pip install -r requirements.txt`
 5. `python simulation.py`
 
+##### Windows 10
+1. `cd producers`
+2. `virtualenv venv`
+3. run activate.bat inside Scripts folder
+4. `pip install -r requirements.txt`
+5. `python simulation.py` 
+
 Once the simulation is running, you may hit `Ctrl+C` at any time to exit.
 
 #### To run the Faust Stream Processing Application:
