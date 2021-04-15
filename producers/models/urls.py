@@ -1,0 +1,3 @@
+
+BOOTSTRAP_SERVERS = 'PLAINTEXT://kafka0:9092,PLAINTEXT://kafka1:9093,PLAINTEXT://kafka2:9094'
+SCHEMA_REGISTRY =  'http://schema-registry:8081'
