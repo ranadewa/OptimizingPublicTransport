@@ -7,7 +7,7 @@ from confluent_kafka import avro
 from confluent_kafka.admin import AdminClient, NewTopic
 from confluent_kafka.avro import AvroProducer
 
-from urls import BOOTSTRAP_SERVERS, SCHEMA_REGISTRY
+from .urls import BOOTSTRAP_SERVERS, SCHEMA_REGISTRY
 
 logger = logging.getLogger(__name__)
 
