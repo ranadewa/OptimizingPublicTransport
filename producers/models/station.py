@@ -37,7 +37,7 @@ class Station(Producer):
         # replicas
         #
         #
-        topic_name = f"com.cta.station.{station_name}_arrival" # <domain>.<model>.<event type>
+        topic_name = f"com.cta.station.{station_name}_train_arrival" # <domain>.<model>.<event type>
         super().__init__(
             topic_name,
             key_schema=Station.key_schema,

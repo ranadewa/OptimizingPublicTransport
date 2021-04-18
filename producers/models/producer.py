@@ -40,8 +40,7 @@ class Producer:
         #
         self.broker_properties = {
             'bootstrap.servers' : BOOTSTRAP_SERVERS,
-            'schema.registry.url' : SCHEMA_REGISTRY,
-            'compression.type': 'gzip'
+            'schema.registry.url' : SCHEMA_REGISTRY
         }
 
         # If the topic does not already exist, try to create it

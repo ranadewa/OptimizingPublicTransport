@@ -36,10 +36,13 @@ class Weather(Producer):
         # replicas
         #
         #
+        self.topic_name = "com.cta.weather.update" # <domain>.<model>.<event type>
         super().__init__(
-            "weather", # TODO: Come up with a better topic name
+            self.topic_name,
             key_schema=Weather.key_schema,
             value_schema=Weather.value_schema,
+            num_partitions=3,
+            num_replicas=3,            
         )
 
         self.status = Weather.status.sunny
@@ -79,31 +82,24 @@ class Weather(Producer):
         # specify the Avro schemas and verify that you are using the correct Content-Type header.
         #
         #
-        logger.info("weather kafka proxy integration incomplete - skipping")
-        #resp = requests.post(
-        #    #
-        #    #
-        #    # TODO: What URL should be POSTed to?
-        #    #
-        #    #
-        #    f"{Weather.rest_proxy_url}/TODO",
-        #    #
-        #    #
-        #    # TODO: What Headers need to bet set?
-        #    #
-        #    #
-        #    headers={"Content-Type": "TODO"},
-        #    data=json.dumps(
-        #        {
-        #            #
-        #            #
-        #            # TODO: Provide key schema, value schema, and records
-        #            #
-        #            #
-        #        }
-        #    ),
-        #)
-        #resp.raise_for_status()
+        url =  f"{Weather.rest_proxy_url}/topics/{self.topic_name}"
+        data = json.dumps(
+                          {  "value_schema" : json.dumps(self.value_schema),
+                            "key_schema" : json.dumps(self.key_schema),
+                            "records": [
+                              { "key" : {"timestamp": self.time_millis() },
+                                "value" :{
+                                    "temperature" : self.temp,
+                                    "status" : self.status.name
+                                    }
+                              }
+                            ]
+                          })
+        headers = {"Content-Type": "application/vnd.kafka.json.v2+json"}
+        
+        resp = requests.post(url, data = data, headers= headers)
+
+        resp.raise_for_status()
 
         logger.debug(
             "sent weather data to kafka, temp: %s, status: %s",
