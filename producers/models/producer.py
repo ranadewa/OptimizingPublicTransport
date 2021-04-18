@@ -11,7 +11,6 @@ from .urls import BOOTSTRAP_SERVERS, SCHEMA_REGISTRY
 
 logger = logging.getLogger(__name__)
 
-
 class Producer:
     """Defines and provides common functionality amongst Producers"""
 
@@ -64,7 +63,7 @@ class Producer:
         #
         #
         client = AdminClient({'bootstrap.servers' : self.broker_properties['bootstrap.servers']})
-        topic = NewTopic(self.topic_name, num_partitions = self.num_partitions, num_replicas = self.num_replicas)
+        topic = NewTopic(self.topic_name, num_partitions = self.num_partitions, replication_factor = self.num_replicas)
         client.create_topics([topic])
 
     def time_millis(self):
@@ -78,7 +77,7 @@ class Producer:
         #
         #
         client = AdminClient({'bootstrap.servers' : self.broker_properties['bootstrap.servers']})
-        client.delete_topics(self.existing_topics)
+        client.delete_topics(list(self.existing_topics))
 
     def time_millis(self):
         """Use this function to get the key for Kafka Events"""

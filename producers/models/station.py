@@ -37,7 +37,7 @@ class Station(Producer):
         # replicas
         #
         #
-        topic_name = f"com.udacity.station.{station_name}_arrival" # <domain>.<model>.<event type>
+        topic_name = f"com.cta.station.{station_name}_arrival" # <domain>.<model>.<event type>
         super().__init__(
             topic_name,
             key_schema=Station.key_schema,
@@ -68,10 +68,10 @@ class Station(Producer):
            key={"timestamp": self.time_millis()},
            value={
                "station_id": self.station_id,
-               "train_id": train,
+               "train_id": train.train_id,
                "direction": direction,
-               "line": "none",
-               "train_status": "arrived", 
+               "line": self.color.name,
+               "train_status": train.status.name, 
                "prev_station_id": prev_station_id,
                "prev_direction": prev_direction
                 
