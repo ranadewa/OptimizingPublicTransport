@@ -32,7 +32,7 @@ def configure_connector():
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
         "value.converter.schemas.enable": "false",
         "batch.max.rows": "500",
-        "topic.prefix": "com.cta.station_info",
+        "topic.prefix": "com.cta.info.",
         "mode": "incrementing",
         "incrementing.column.name": "stop_id",
         "connection.url": "jdbc:postgresql://localhost:5432/cta",
