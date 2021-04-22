@@ -41,7 +41,7 @@ class Weather(Producer):
             self.topic_name,
             key_schema=Weather.key_schema,
             value_schema=Weather.value_schema,
-            num_partitions=3,
+            num_partitions=1,
             num_replicas=3,            
         )
 

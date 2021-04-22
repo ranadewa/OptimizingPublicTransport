@@ -11,6 +11,7 @@ from .urls import BOOTSTRAP_SERVERS, SCHEMA_REGISTRY
 
 logger = logging.getLogger(__name__)
 
+
 class Producer:
     """Defines and provides common functionality amongst Producers"""
 
@@ -75,8 +76,16 @@ class Producer:
         # TODO: Write cleanup code for the Producer here
         #
         #
-        client = AdminClient({'bootstrap.servers' : self.broker_properties['bootstrap.servers']})
-        client.delete_topics(list(self.existing_topics))
+        if len(self.existing_topics) is not 0:
+            client = AdminClient({'bootstrap.servers' : self.broker_properties['bootstrap.servers']})
+            fs = client.delete_topics(list(self.existing_topics))
+        
+            self.existing_topics.clear()
+            for topic, f in fs.items():
+                try:
+                    f.result()
+                except Exception as e:
+                    print("Failed to delete topic {}: {}".format(topic, e))
 
     def time_millis(self):
         """Use this function to get the key for Kafka Events"""

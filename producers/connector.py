@@ -17,7 +17,7 @@ def configure_connector():
 
     resp = requests.get(f"{KAFKA_CONNECT_URL}/{CONNECTOR_NAME}")
     if resp.status_code == 200:
-        logging.debug("connector already created skipping recreation")
+        logging.info("connector already created skipping recreation")
         return
 
     # TODO: Complete the Kafka Connect Config below.
@@ -53,7 +53,7 @@ def configure_connector():
     
     ## Ensure a healthy response was given
     resp.raise_for_status()
-    logging.debug("connector created successfully")
+    logging.info("connector created successfully")
 
 
 if __name__ == "__main__":
