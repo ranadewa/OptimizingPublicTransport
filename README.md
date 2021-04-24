@@ -238,3 +238,11 @@ Once the simulation is running, you may hit `Ctrl+C` at any time to exit.
 5. `python server.py`
 
 Once the server is running, you may hit `Ctrl+C` at any time to exit.
+
+Topics used:
+arrivals: org.chicago.cta.station.arrivals.{station_name}
+turnstile_event: org.chicago.cta.station.turnstile_entry
+weather: org.chicago.cta.weather.update
+stations: org.chicago.cta.stations  
+faust transformed station table : org.chicago.cta.stations.table
+ksql turnstile summary: TURNSTILE_SUMMARY
