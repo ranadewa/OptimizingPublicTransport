@@ -42,6 +42,9 @@ class KafkaConsumer:
             'group.id': '0'
         }
 
+        if(self.offset_earliest):
+            self.broker_properties['auto.offset.reset'] = 'earliest'
+            
         # TODO: Create the Consumer, using the appropriate type.
         if is_avro is True:
             self.broker_properties["schema.registry.url"] = "http://localhost:8081"
@@ -94,6 +97,7 @@ class KafkaConsumer:
             logger.error(f"error from consumer: {message.error()}")
             return 0
         else:
+            message_handler(message)
             return 1
 
 

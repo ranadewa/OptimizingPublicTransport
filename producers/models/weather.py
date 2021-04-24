@@ -41,7 +41,7 @@ class Weather(Producer):
             self.topic_name,
             key_schema=Weather.key_schema,
             value_schema=Weather.value_schema,
-            num_partitions=1,
+            num_partitions=2,
             num_replicas=3,            
         )
 
@@ -83,21 +83,29 @@ class Weather(Producer):
         #
         #
         url =  f"{Weather.rest_proxy_url}/topics/{self.topic_name}"
-        data = json.dumps(
-                          {  "value_schema" : json.dumps(self.value_schema),
-                            "key_schema" : json.dumps(self.key_schema),
-                            "records": [
-                              { "key" : {"timestamp": self.time_millis() },
-                                "value" :{
-                                    "temperature" : self.temp,
-                                    "status" : self.status.name
-                                    }
-                              }
-                            ]
-                          })
-        headers = {"Content-Type": "application/vnd.kafka.json.v2+json"}
+        headers = {"Content-Type": "application/vnd.kafka.avro.v2+json"}
         
-        resp = requests.post(url, data = data, headers= headers)
+        resp = requests.post(
+           url,
+           headers=headers,
+           data=json.dumps(
+               {
+                   "key_schema": json.dumps(Weather.key_schema),
+                   "value_schema": json.dumps(Weather.value_schema),
+                   "records": [
+                       {
+                           "key": {
+                               "timestamp": self.time_millis()
+                           },
+                           "value": {
+                                "temperature": self.temp,
+                                "status": self.status.name
+                           }
+                       }
+                   ]
+               }
+           )
+        )
 
         resp.raise_for_status()
 

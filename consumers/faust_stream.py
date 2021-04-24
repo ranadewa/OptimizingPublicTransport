@@ -57,14 +57,12 @@ table = app.Table(
 async def stationupdate(stations):
     async for station in stations:
         
-        transformed = TransformedStation(
+        table[station.station_id] = TransformedStation(
             station_id = station.station_id,
             station_name = station.station_name,
             order = station.order,
             line=getLineColor(station.red, station.blue, station.green)
         )
-        
-        await out_topic.send(value = transformed)
 
 def getLineColor(red, blue, green):
     color = "red" if red == True else "blue" if blue == True  else "green"

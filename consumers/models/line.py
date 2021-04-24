@@ -58,7 +58,6 @@ class Line:
         """Given a kafka message, extract data"""
         # TODO: Based on the message topic, call the appropriate handler.
         topic = message.topic()
-        print(topic)
         
         if topic == 'org.chicago.cta.stations.table': # Set the conditional correctly to the stations Faust Table
             try:
@@ -66,7 +65,7 @@ class Line:
                 self._handle_station(value)
             except Exception as e:
                 logger.fatal("bad station? %s, %s", value, e)
-        elif 'arrival' in topic: # Set the conditional to the arrival topic
+        elif len(topic.partition('org.chicago.cta.station.arrivals.').match) > 0 : # Set the conditional to the arrival topic
             self._handle_arrival(message)
         elif topic == 'TURNSTILE_SUMMARY': # Set the conditional to the KSQL Turnstile Summary Topic
             json_data = json.loads(message.value())
