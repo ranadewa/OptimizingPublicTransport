@@ -36,7 +36,7 @@ class Weather(Producer):
         # replicas
         #
         #
-        self.topic_name = "com.cta.weather.update" # <domain>.<model>.<event type>
+        self.topic_name = "org.chicago.cta.weather.update" # <domain>.<model>.<event type>
         super().__init__(
             self.topic_name,
             key_schema=Weather.key_schema,

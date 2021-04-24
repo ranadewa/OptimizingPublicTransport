@@ -60,7 +60,7 @@ class Line:
         topic = message.topic()
         print(topic)
         
-        if topic == 'com.cta.stations.table': # Set the conditional correctly to the stations Faust Table
+        if topic == 'org.chicago.cta.stations.table': # Set the conditional correctly to the stations Faust Table
             try:
                 value = json.loads(message.value())
                 self._handle_station(value)

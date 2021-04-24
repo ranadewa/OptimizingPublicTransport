@@ -35,7 +35,7 @@ class Turnstile(Producer):
         # replicas
         #
         #
-        self.topic_name = f"com.cta.station.turnstile_entry" # <domain>.<model>.<event type>
+        self.topic_name = f"org.chicago.cta.station.turnstile_entry" # <domain>.<model>.<event type>
         super().__init__(
             self.topic_name, # TODO: Come up with a better topic name
             key_schema=Turnstile.key_schema,
